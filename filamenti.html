@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Italia Lab - Filamenti</title>
+
+  <style>
+    body {
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#1a1a1a; /* SFONDO SCURO ELEGANTE */
+      color:#e6e6e6;      /* TESTO CHIARO */
+    }
+
+    /* HEADER */
+    header {
+      text-align:center;
+      padding:40px 20px;
+      background:#111; /* Più scuro per contrasto */
+      box-shadow:0 3px 10px rgba(0,0,0,0.4);
+      color:#f0c674; /* oro tenue */
+    }
+
+    header h1 {
+      margin:0;
+      font-size:2.2em;
+      color:#ffd27f; /* oro acceso */
+    }
+
+    header p {
+      margin-top:10px;
+      font-size:1.1em;
+      opacity:0.9;
+      color:#e6e6e6;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width:1100px;
+      margin:40px auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:30px;
+      justify-content:center;
+      padding:0 20px;
+    }
+
+    /* CARD FILAMENTI */
+    .filamento {
+      width:300px;
+      background:#2a2a2a; /* card grigio scuro */
+      border-radius:15px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.5);
+      padding:20px;
+      text-align:center;
+      position:relative;
+      transition:0.25s;
+      color:white;
+    }
+
+    .filamento:hover {
+      transform:translateY(-6px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .filamento img {
+      width:100%;
+      border-radius:12px;
+      margin-bottom:15px;
+    }
+
+    .filamento h2 {
+      font-size:1.6em;
+      margin-top:10px;
+      color:#ffd27f; /* oro */
+    }
+
+    /* POPUP INFO */
+    .popup-info {
+      display:none;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.85);
+      color:#ffd27f; /* testo oro nel popup */
+      border-radius:15px;
+      padding:20px;
+      text-align:left;
+      box-sizing:border-box;
+    }
+
+    .filamento:hover .popup-info {
+      display:block;
+    }
+
+    .popup-info h3 {
+      margin-top:0;
+      color:#ffeba7;
+    }
+
+    /* BOTTONE */
+    .bottone {
+      display:inline-block;
+      margin:40px auto;
+      padding:12px 25px;
+      background:#ffd27f; /* oro */
+      color:#000;
+      text-decoration:none;
+      border-radius:8px;
+      font-size:1.1em;
+      transition:0.2s;
+    }
+
+    .bottone:hover {
+      background:#e6b769;
+    }
+
+    @media(max-width:600px){
+      header h1{font-size:1.8em;}
+      .filamento{width:90%;}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Filamenti per Principianti e Tecnici</h1>
+  <p>Conosci i materiali base e quelli avanzati per la stampa 3D.</p>
+</header>
+
+<div class="container">
+
+  <div class="filamento">
+    <img src="immagini/pla.jpg" alt="PLA">
+    <div class="popup-info">
+      <h3>PLA</h3>
+      <p>
+        • Facilissimo da stampare<br>
+        • No warping<br>
+        • Perfetto per principianti<br>
+        • Temp.: 190–210°C
+      </p>
+    </div>
+    <h2>PLA</h2>
+  </div>
+
+  <div class="filamento">
+    <img src="immagini/petg.jpg" alt="PETG">
+    <div class="popup-info">
+      <h3>PETG</h3>
+      <p>
+        • Più resistente del PLA<br>
+        • Ottima adesione<br>
+        • Temp.: 230–250°C
+      </p>
+    </div>
+    <h2>PETG</h2>
+  </div>
+
+  <div class="filamento">
+    <img src="immagini/tpu.jpg" alt="TPU">
+    <div class="popup-info">
+      <h3>TPU</h3>
+      <p>
+        • Flessibile<br>
+        • Difficile ad alte velocità<br>
+        • Temp.: 210–240°C
+      </p>
+    </div>
+    <h2>TPU</h2>
+  </div>
+
+  <div class="filamento">
+    <img src="immagini/abs.jpg" alt="ABS">
+    <div class="popup-info">
+      <h3>ABS</h3>
+      <p>
+        • Resistente agli urti<br>
+        • Più durevole del PLA<br>
+        • Può deformarsi senza piano riscaldato<br>
+        • Temperatura: 230–260°C
+      </p>
+    </div>
+    <h2>ABS</h2>
+  </div>
+
+  <div class="filamento">
+    <img src="immagini/asa.jpg" alt="ASA">
+    <div class="popup-info">
+      <h3>ASA</h3>
+      <p>
+        • Resistente ai raggi UV<br>
+        • Ideale per applicazioni esterne<br>
+        • Simile all’ABS ma più stabile<br>
+        • Temperatura: 240–260°C
+      </p>
+    </div>
+    <h2>ASA</h2>
+  </div>
+
+  <div class="filamento">
+    <img src="immagini/nylon.jpg" alt="Nylon">
+    <div class="popup-info">
+      <h3>Nylon</h3>
+      <p>
+        • Altissima resistenza meccanica<br>
+        • Molto flessibile e durevole<br>
+        • Necessita ambiente asciutto (igroscopico)<br>
+        • Temperatura: 240–270°C
+      </p>
+    </div>
+    <h2>Nylon</h2>
+  </div>
+
+  <div class="filamento">
+    <img src="immagini/carbon.jpg" alt="Fibra di Carbonio">
+    <div class="popup-info">
+      <h3>Fibra di Carbonio</h3>
+      <p>
+        • Estremamente rigido e leggero<br>
+        • Super resistente, ideale per parti tecniche<br>
+        • ATTENZIONE: abrasivo → serve ugello in acciaio temprato<br>
+        • Temperatura: varia (PLA‑CF 200–220°C, PA‑CF 260–300°C)
+      </p>
+    </div>
+    <h2>Fibra di Carbonio</h2>
+  </div>
+
+</div>
+<center>
+  <a class="bottone" href="index.html">⬅ Torna alla Home</a>
+</center>
+
+</body>
+</html>
+

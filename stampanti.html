@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Italia Lab - Stampanti 3D</title>
+  <style>
+    :root{
+      --bg:#1b1b1e;
+      --card:#26262a;
+      --accent:#c9a227;
+      --muted:#e8e6e3;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--muted);font-family:Inter,Arial,sans-serif}
+    header{padding:28px 16px;text-align:center;background:#232326;border-bottom:2px solid rgba(201,162,39,.12)}
+    header h1{color:var(--accent);margin:0;font-size:28px}
+    header p{margin:8px 0 0;color:rgba(232,230,227,.85)}
+    .container{max-width:1200px;margin:28px auto;padding:0 16px}
+    .titolo{color:var(--accent);text-align:center;font-size:22px;margin:26px 0}
+
+    /* grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.45);
+      transition:transform .18s,box-shadow .18s;
+      cursor:pointer;
+      position:relative;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(0,0,0,.45);border-color:rgba(201,162,39,.12)}
+
+    /* image sizing - fixed height so thumbnails are uniform */
+    .card .thumb{
+      display:block;
+      width:100%;
+      height:150px;            /* <<--- dimensione contenuta */
+      object-fit:contain;
+      background:#0f0f10;
+      padding:10px;
+    }
+
+    .card h2{
+      margin:0;padding:12px 14px;background:#1f1f22;color:var(--accent);font-size:16px;text-align:center;border-top:1px solid rgba(0,0,0,.3)
+    }
+
+    /* popup overlay */
+    .popup{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);z-index:9999;padding:20px;
+    }
+    .dialog{
+      width:100%;max-width:760px;background:#0d0d0f;border-radius:12px;border:1px solid rgba(201,162,39,.08);overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,.7);color:var(--muted);
+    }
+    .dialog .head{display:flex;gap:12px;align-items:center;padding:16px 18px;background:#111}
+    .dialog .head img{width:120px;height:80px;object-fit:contain;background:#000;padding:8px;border-radius:8px}
+    .dialog .head .title{color:var(--accent);font-size:18px;font-weight:600}
+    .dialog .body{padding:16px 18px;line-height:1.45}
+    .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+    .spec{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;font-size:14px}
+    .close-btn{display:inline-block;margin:12px 18px 18px;background:var(--accent);color:#000;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600}
+
+    /* responsive adjustments */
+    @media (max-width:520px){
+      .card .thumb{height:130px}
+      .dialog .head img{display:none}
+      .dialog .head{flex-direction:column;align-items:flex-start}
+    }
+    /* back button */
+    .back{display:inline-block;margin:28px auto;padding:10px 16px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Stampanti 3D Consigliate</h1>
+  <p>Panoramica completa: entry-level, prosumer e professionali.</p>
+</header>
+
+<div class="container">
+
+  <h2 class="titolo">Stampanti FDM Base / Produzione</h2>
+  <div class="grid" id="grid-base">
+    <!-- Each .card has data-id which maps to popup id -->
+    <div class="card" data-id="p-a1mini">
+      <img class="thumb" src="immagini/A1minicombo.webp" alt="A1 Mini Combo">
+      <h2>A1 Mini Combo</h2>
+    </div>
+
+    <div class="card" data-id="p-a1combo">
+      <img class="thumb" src="immagini/A1combo.png" alt="A1 Combo">
+      <h2>A1 Combo</h2>
+    </div>
+
+    <div class="card" data-id="p-p1s">
+      <img class="thumb" src="immagini/P1s.jpg" alt="P1S Combo">
+      <h2>P1S Combo</h2>
+    </div>
+
+    <div class="card" data-id="p-k1c">
+      <img class="thumb" src="immagini/k1c.jpg" alt="Creality K1C">
+      <h2>Creality K1C</h2>
+    </div>
+
+    <div class="card" data-id="p-ender3v2">
+      <img class="thumb" src="immagini/ender3v2.jpg" alt="Ender 3 V2">
+      <h2>Ender 3 V2</h2>
+    </div>
+
+    <div class="card" data-id="p-cr10v3">
+      <img class="thumb" src="immagini/cr10v3.jpg" alt="CR-10 V3">
+      <h2>CR-10 V3</h2>
+    </div>
+
+    <div class="card" data-id="p-k1">
+      <img class="thumb" src="immagini/k1.jpg" alt="Creality K1">
+      <h2>Creality K1</h2>
+    </div>
+
+    <div class="card" data-id="p-prusamk4">
+      <img class="thumb" src="immagini/prusa_mk4.jpg" alt="Prusa MK4">
+      <h2>Prusa MK4</h2>
+    </div>
+
+    <div class="card" data-id="p-prusamini">
+      <img class="thumb" src="immagini/prusa_mini.jpg" alt="Prusa MINI+">
+      <h2>Prusa MINI+</h2>
+    </div>
+
+    <!-- New ones you added -->
+    <div class="card" data-id="p-prusa">
+      <img class="thumb" src="immagini/prusa.jpg" alt="Prusa MK3S+">
+      <h2>Prusa MK3S+</h2>
+    </div>
+
+    <div class="card" data-id="p-ender3v3">
+      <img class="thumb" src="immagini/ender3v3.jpg" alt="Ender 3 V3">
+      <h2>Ender 3 V3</h2>
+    </div>
+
+    <div class="card" data-id="p-bambulabp1p">
+      <img class="thumb" src="immagini/bambulabp1p.jpg" alt="Bambu Lab P1P">
+      <h2>Bambu Lab P1P</h2>
+    </div>
+
+    <div class="card" data-id="p-kobra">
+      <img class="thumb" src="immagini/kobra.jpg" alt="Anycubic Kobra">
+      <h2>Anycubic Kobra</h2>
+    </div>
+
+    <div class="card" data-id="p-neptune4">
+      <img class="thumb" src="immagini/neptune4.jpg" alt="Elegoo Neptune 4">
+      <h2>Elegoo Neptune 4</h2>
+    </div>
+  </div>
+
+  <h2 class="titolo">Stampanti FDM Tecniche / Professionali</h2>
+  <div class="grid" id="grid-pro">
+    <div class="card" data-id="p-h2c">
+      <img class="thumb" src="immagini/h2c.jpg" alt="BambuLab H2C">
+      <h2>BambuLab H2C</h2>
+    </div>
+
+    <div class="card" data-id="p-h2s">
+      <img class="thumb" src="immagini/h2s.jpg" alt="BambuLab H2S">
+      <h2>BambuLab H2S</h2>
+    </div>
+
+    <div class="card" data-id="p-h2d">
+      <img class="thumb" src="immagini/h2d.jpg" alt="BambuLab H2D">
+      <h2>BambuLab H2D</h2>
+    </div>
+
+    <div class="card" data-id="p-coreone">
+      <img class="thumb" src="immagini/prusa_core_one.jpg" alt="Prusa Core One">
+      <h2>Prusa Core One</h2>
+    </div>
+
+    <div class="card" data-id="p-coreonel">
+      <img class="thumb" src="immagini/prusa_core_one_l.jpg" alt="Prusa Core One L">
+      <h2>Prusa Core One L</h2>
+    </div>
+  </div>
+
+  <div style="margin:28px 0;text-align:center">
+    <a class="back" href="index.html" style="display:inline-block;background:#c9a227;color:#000;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700">⬅ Torna alla Home</a>
+  </div>
+
+</div>
+
+<!-- POPUPS: one per printer (id must match data-id) -->
+<!-- Example: A1 Mini -->
+<div id="p-a1mini" class="popup" aria-hidden="true" role="dialog">
+  <div class="dialog" role="document">
+    <div class="head">
+      <img src="immagini/A1minicombo.webp" alt="A1 Mini Combo">
+      <div>
+        <div class="title">BambuLab A1 Mini Combo</div>
+        <div style="color:#ddd;margin-top:6px">Compatta, veloce e con AMS Lite (multicolor)</div>
+      </div>
+    </div>
+    <div class="body">
+      <strong>Caratteristiche principali</strong>
+      <div class="specs" style="margin-top:10px">
+        <div class="spec">Volume: 180 × 180 × 180 mm</div>
+        <div class="spec">Estrusore: singolo</div>
+        <div class="spec">Velocità: fino a 200 mm/s</div>
+        <div class="spec">Prezzo indicativo: ~ 350 €</div>
+      </div>
+      <p style="margin-top:12px">Ideale per chi vuole multicolor entry-level con automatismi BambuLab.</p>
+      <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- A1 Combo -->
+<div id="p-a1combo" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/A1combo.png" alt=""><div><div class="title">BambuLab A1 Combo</div><div style="color:#ddd;margin-top:6px">Buon bilanciamento prezzo/velocità con AMS</div></div></div>
+  <div class="body">
+    <strong>Spec</strong>
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 256 × 256 × 256 mm</div>
+      <div class="spec">AMS Lite: sì</div>
+      <div class="spec">Velocità/qualità: alta</div>
+      <div class="spec">Prezzo: ~ 469 €</div>
+    </div>
+    <p style="margin-top:12px">Ottima per produzione rapida multicolore su piccolo volume.</p>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- P1S -->
+<div id="p-p1s" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/P1s.jpg" alt=""><div><div class="title">BambuLab P1S Combo</div><div style="color:#ddd;margin-top:6px">Focalizzata su materiali tecnici</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 256 × 256 × 256 mm</div>
+      <div class="spec">AMS: sì</div>
+      <div class="spec">Materiali: PLA, PETG, Nylon, PC, ASA</div>
+      <div class="spec">Prezzo: ~ 700 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- K1C -->
+<div id="p-k1c" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/k1c.jpg" alt=""><div><div class="title">Creality K1C</div><div style="color:#ddd;margin-top:6px">Velocità e camera riscaldata</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 220 × 220 × 250 mm</div>
+      <div class="spec">Camera: riscaldata</div>
+      <div class="spec">Prezzo: ~ 507 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- Ender 3 V2 -->
+<div id="p-ender3v2" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/ender3v2.jpg" alt=""><div><div class="title">Creality Ender 3 V2</div><div style="color:#ddd;margin-top:6px">Popolare, grande community</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 220 × 220 × 250 mm</div>
+      <div class="spec">Facilità: alta</div>
+      <div class="spec">Prezzo: ~ 270 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- CR-10 V3 -->
+<div id="p-cr10v3" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/cr10v3.jpg" alt=""><div><div class="title">Creality CR-10 V3</div><div style="color:#ddd;margin-top:6px">Grande volume a prezzo accessibile</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 300 × 300 × 400 mm</div>
+      <div class="spec">Uso: produzione / grandi oggetti</div>
+      <div class="spec">Prezzo: ~ 500 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- K1 -->
+<div id="p-k1" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/k1.jpg" alt=""><div><div class="title">Creality K1</div><div style="color:#ddd;margin-top:6px">Equilibrio tra velocità e qualità</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 220 × 220 × 250 mm</div>
+      <div class="spec">Prezzo: ~ 550 €</div>
+      <div class="spec">Perfetta per: prototipi rapidi</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- Prusa MK4 -->
+<div id="p-prusamk4" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/prusa_mk4.jpg" alt=""><div><div class="title">Prusa MK4</div><div style="color:#ddd;margin-top:6px">Precisione e qualità costante</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 250 × 210 × 220 mm</div>
+      <div class="spec">Affidabilità: top</div>
+      <div class="spec">Prezzo: ~ 1.000 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- Prusa MINI+ -->
+<div id="p-prusamini" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/prusa_mini.jpg" alt=""><div><div class="title">Prusa MINI+</div><div style="color:#ddd;margin-top:6px">Compatta e precisa</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 180 × 180 × 180 mm</div>
+      <div class="spec">Prezzo: ~ 450 €</div>
+      <div class="spec">Ottima per: spazio limitato</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- New: Prusa MK3S+ -->
+<div id="p-prusa" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/prusa.jpg" alt=""><div><div class="title">Prusa MK3S+</div><div style="color:#ddd;margin-top:6px">Classica e affidabile</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 250 × 210 × 210 mm</div>
+      <div class="spec">Tecnologia: Cartesian</div>
+      <div class="spec">Prezzo: variabile</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- New: Ender 3 V3 -->
+<div id="p-ender3v3" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/ender3v3.jpg" alt=""><div><div class="title">Ender 3 V3</div><div style="color:#ddd;margin-top:6px">Evoluzione della popolare Ender</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume simile alla V2</div>
+      <div class="spec">Miglioramenti meccanici</div>
+      <div class="spec">Prezzo: entry-level</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- New: Bambu Lab P1P -->
+<div id="p-bambulabp1p" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/bambulabp1p.jpg" alt=""><div><div class="title">Bambu Lab P1P</div><div style="color:#ddd;margin-top:6px">Ottima qualità su piccolo footprint</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: compatto</div>
+      <div class="spec">Velocità/qualità: eccellente</div>
+      <div class="spec">Prezzo: prosumer</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- New: Anycubic Kobra -->
+<div id="p-kobra" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/kobra.jpg" alt=""><div><div class="title">Anycubic Kobra</div><div style="color:#ddd;margin-top:6px">Buon rapporto qualità/prezzo</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Facile da usare</div>
+      <div class="spec">Volume medio</div>
+      <div class="spec">Prezzo: economico</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- New: Elegoo Neptune 4 -->
+<div id="p-neptune4" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/neptune4.jpg" alt=""><div><div class="title">Elegoo Neptune 4</div><div style="color:#ddd;margin-top:6px">Entry-level con buone prestazioni</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: medio</div>
+      <div class="spec">Buon prezzo</div>
+      <div class="spec">Adatta a principianti</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- H2C -->
+<div id="p-h2c" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/h2c.jpg" alt=""><div><div class="title">BambuLab H2C</div><div style="color:#ddd;margin-top:6px">Sistema Vortek Flow, camera semi-chiusa</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 330 × 325 × 320 mm</div>
+      <div class="spec">Materiali: Nylon, PC, ABS, ASA, CF</div>
+      <div class="spec">Prezzo: ~ 2.250 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- H2S -->
+<div id="p-h2s" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/h2s.jpg" alt=""><div><div class="title">BambuLab H2S</div><div style="color:#ddd;margin-top:6px">Camera riscaldata 65°C, estrusione ad alto flusso</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 340 × 320 × 340 mm</div>
+      <div class="spec">Materiali tecnici</div>
+      <div class="spec">Prezzo: ~ 1.500 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- H2D -->
+<div id="p-h2d" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/h2d.jpg" alt=""><div><div class="title">BambuLab H2D</div><div style="color:#ddd;margin-top:6px">IDEX, camera riscaldata, per produzione</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 330 × 325 × 320 mm</div>
+      <div class="spec">Doppio estrusore indipendente</div>
+      <div class="spec">Prezzo: ~ 2.199 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- Core One -->
+<div id="p-coreone" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/prusa_core_one.jpg" alt=""><div><div class="title">Prusa Core One</div><div style="color:#ddd;margin-top:6px">CoreXY professionale</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 250 × 220 × 270 mm</div>
+      <div class="spec">Materiali: tecnici</div>
+      <div class="spec">Prezzo: ~ 1.000 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<!-- Core One L -->
+<div id="p-coreonel" class="popup"><div class="dialog">
+  <div class="head"><img src="immagini/prusa_core_one_l.jpg" alt=""><div><div class="title">Prusa Core One L</div><div style="color:#ddd;margin-top:6px">Versione con volume maggiore</div></div></div>
+  <div class="body">
+    <div class="specs" style="margin-top:10px">
+      <div class="spec">Volume: 300 × 300 × 300 mm</div>
+      <div class="spec">Stabilità industriale</div>
+      <div class="spec">Prezzo: ~ 1.700 €</div>
+    </div>
+    <div style="text-align:right"><a class="close-btn" href="#" data-close>Chiudi</a></div>
+  </div>
+</div></div>
+
+<script>
+  // open popup when clicking cards
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> {
+      const id = card.getAttribute('data-id');
+      if(!id) return;
+      const p = document.getElementById(id);
+      if(p){ p.style.display='flex'; p.setAttribute('aria-hidden','false'); }
+    });
+  });
+
+  // close handlers (click overlay or close button)
+  document.querySelectorAll('.popup').forEach(overlay=>{
+    overlay.addEventListener('click', (e)=>{
+      // click overlay to close (but not clicks inside dialog)
+      if(e.target === overlay){
+        overlay.style.display='none';
+        overlay.setAttribute('aria-hidden','true');
+      }
+    });
+    overlay.querySelectorAll('[data-close]').forEach(btn=>{
+      btn.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        overlay.style.display='none';
+        overlay.setAttribute('aria-hidden','true');
+      });
+    });
+  });
+
+  // optional: escape key to close any open popup
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.popup[style*="display: flex"]').forEach(p=>{
+        p.style.display='none'; p.setAttribute('aria-hidden','true');
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

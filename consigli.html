@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consigli Avanzati - 3D Italia Lab</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    margin: 0;
+    padding: 0;
+    color: #e6e6e6;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: #0d0d0d;
+    box-shadow: 0 3px 10px rgba(255, 215, 0, 0.15);
+    border-bottom: 2px solid rgba(255, 200, 0, 0.4);
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 2.2em;
+    background: linear-gradient(45deg, #ffcc00, #c59c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* BOX */
+  .box {
+    background: #111;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.08);
+    margin-bottom: 28px;
+    transition: 0.25s;
+    border: 1px solid rgba(255, 200, 0, 0.25);
+  }
+
+  .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(255, 215, 0, 0.15);
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #ffdd55, #bb8e00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  /* BACK BUTTON */
+  .back {
+    display: block;
+    width: 220px;
+    margin: 45px auto;
+    background: linear-gradient(45deg, #c59c00, #ffcc00);
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.15em;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+
+  .back:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 1.8em;
+    }
+
+    .box {
+      padding: 18px;
+    }
+
+    .back {
+      width: 75%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Consigli Avanzati per la Stampa 3D</h1>
+</header>
+
+<div class="container">
+
+  <div class="box">
+    <h2>1. Calibrazioni Avanzate</h2>
+    <ul>
+      <li>Calibrazione flusso (Flow Rate)</li>
+      <li>Calibrazione e-step e pressione estrusore</li>
+      <li>Calibrazione temperatura con torre termica</li>
+      <li>Calibrazione velocità e accelerazioni</li>
+      <li>Calibrazione input shaper (se compatibile)</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>2. Materiali Tecnici</h2>
+    <ul>
+      <li>Uso della camera chiusa per ABS, ASA, PA, PC</li>
+      <li>Essiccazione obbligatoria per Nylon, TPU e compositi</li>
+      <li>Utilizzo di ugelli in acciaio temprato per CF/Glass</li>
+      <li>Adesivi consigliati per materiali difficili</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>3. Migliorare la Qualità di Stampa</h2>
+    <ul>
+      <li>Utilizzo di profili dedicati per ogni filamento</li>
+      <li>Fan tuning per materiali sensibili</li>
+      <li>Riduzione vibrazioni con piedini in silicone</li>
+      <li>Superfici di stampa: PEI liscio, testurizzato, vetro</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>4. Manutenzione Avanzata</h2>
+    <ul>
+      <li>Pulizia hotend e heat break</li>
+      <li>Lubrificazione guide e pulegge</li>
+      <li>Controllo cinghie e tensionamento</li>
+      <li>Analisi log stampa per errori ripetuti</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>5. Per Chi Vuole Acquistare una Stampante</h2>
+    <ul>
+      <li>Valutare volume di stampa necessario</li>
+      <li>Preferire camera chiusa se si usano materiali tecnici</li>
+      <li>Considerare il supporto software e gli aggiornamenti</li>
+      <li>Scegliere una macchina affidabile con community attiva</li>
+      <li>Budget consigliato per iniziare: 300€ - 1000€</li>
+    </ul>
+  </div>
+
+</div>
+
+<a class="back" href="index.html">⬅ Torna alla Home</a>
+
+</body>
+</html>
